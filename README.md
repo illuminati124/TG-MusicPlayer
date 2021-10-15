@@ -29,7 +29,7 @@ sudo apt-get install git ffmpeg -y
 
 3) Cloning the Repo
 ```bash
-git clone https://github.com/Lost-In-Dark/TG-MusicPlayer
+git clone -b video https://github.com/Lost-In-Dark/TG-MusicPlayer
 cd TG-MusicPlayer
 ```
 
