@@ -3,8 +3,10 @@ from config import bot, call_py
 from pytgcalls import StreamType
 from pyrogram import Client
 from pyrogram.raw.base import Update
-from pytgcalls.types.input_stream import AudioPiped
+from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from pytgcalls.types.stream import StreamAudioEnded  
+from pytgcalls.types.input_stream.quality import HighQualityAudio
+from pytgcalls.types.input_stream.quality import HighQualityVideo, MediumQualityVideo, LowQualityVideo
 
 async def skip_current_song(chat_id):
    if chat_id in QUEUE:
@@ -17,14 +19,32 @@ async def skip_current_song(chat_id):
          songname = chat_queue[1][0]
          url = chat_queue[1][1]
          link = chat_queue[1][2]
-         await call_py.change_stream(
-            chat_id,
-            AudioPiped(
-               url,
-            )
-         ) 
+         type = chat_queue[1][3]
+         Q = chat_queue[1][4]
+         if type=="Audio":
+            await call_py.change_stream(
+               chat_id,
+               AudioPiped(
+                  url,
+               )
+            ) 
+         elif type=="Video":
+            if Q==720:
+               hm = HighQualityVideo()
+            elif Q==480:
+               hm = MediumQualityVideo()
+            elif Q==360:
+               hm = LowQualityVideo()
+            await call_py.change_stream(
+               chat_id,
+               AudioVideoPiped(
+                  url,
+                  HighQualityAudio(),
+                  hm
+               )
+            ) 
          pop_an_item(chat_id)
-         return [songname, link]
+         return [songname, link, type]
    else:
       return 0
 
@@ -52,6 +72,6 @@ async def on_end_handler(client, update: Update):
       if op==1:
          await bot.send_message(chat_id, "`Queue is Empty, Leaving Voice Chat...`")
       else:
-         await bot.send_message(chat_id, f"**🎧 Now Playing** \n[{op[0]}]({op[1]})", disable_web_page_preview=True)
+         await bot.send_message(chat_id, f"**🎧 Now Playing** \n[{op[0]}]({op[1]}) | `{op[2]}`", disable_web_page_preview=True)
    else:
       pass
