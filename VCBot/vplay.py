@@ -81,17 +81,17 @@ async def play(client, m: Message):
             await huehue.edit(f"Queued at **#{pos}**")
          else:
             if Q==720:
-               hm = HighQualityVideo()
+               hmmm = HighQualityVideo()
             elif Q==480:
-               hm = MediumQualityVideo()
+               hmmm = MediumQualityVideo()
             elif Q==360:
-               hm = LowQualityVideo()
+               hmmm = LowQualityVideo()
             await call_py.join_group_call(
                chat_id,
                AudioVideoPiped(
                   dl,
                   HighQualityAudio(),
-                  hm
+                  hmmm
                ),
                stream_type=StreamType().pulse_stream,
             )
@@ -105,7 +105,7 @@ async def play(client, m: Message):
             query = m.text.split(None, 1)[1]
             search = ytsearch(query)
             Q = 720
-            hm = HighQualityVideo()
+            hmmm = HighQualityVideo()
             if search==0:
                await huehue.edit("`Found Nothing for the Given Query`")
             else:
@@ -125,7 +125,7 @@ async def play(client, m: Message):
                            AudioVideoPiped(
                               ytlink,
                               HighQualityAudio(),
-                              hm
+                              hmmm
                            ),
                            stream_type=StreamType().pulse_stream,
                         )
@@ -142,7 +142,7 @@ async def play(client, m: Message):
             query = m.text.split(None, 1)[1]
             search = ytsearch(query)
             Q = 720
-            hm = HighQualityVideo()
+            hmmm = HighQualityVideo()
             if search==0:
                await huehue.edit("`Found Nothing for the Given Query`")
             else:
@@ -162,7 +162,7 @@ async def play(client, m: Message):
                            AudioVideoPiped(
                               ytlink,
                               HighQualityAudio(),
-                              hm
+                              hmmm
                            ),
                            stream_type=StreamType().pulse_stream,
                         )
