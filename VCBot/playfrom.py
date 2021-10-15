@@ -31,7 +31,7 @@ async def playfrom(client, m: Message):
                   songname = x.audio.file_name[:30] + "..."
                link = x.link
                if chat_id in QUEUE:
-                  add_to_queue(chat_id, songname, location, link)
+                  add_to_queue(chat_id, songname, location, link, "Audio", 0)
                else:
                   await call_py.join_group_call(
                      chat_id,
@@ -40,7 +40,7 @@ async def playfrom(client, m: Message):
                      ),
                      stream_type=StreamType().pulse_stream,
                   )
-                  add_to_queue(chat_id, songname, location, link)
+                  add_to_queue(chat_id, songname, location, link, "Audio", 0)
                   await m.reply(f"**Started Playing Songs from {chat} ▶** \n**🎧 SONG** : [{songname}]({link}) \n**💬 CHAT** : `{chat_id}`", disable_web_page_preview=True)
          await hmm.delete()
          await m.reply(f"Added **{limit}** SONGS to Queue")
