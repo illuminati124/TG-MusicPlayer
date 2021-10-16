@@ -46,7 +46,7 @@ async def updater(client, m: Message):
                break
          if heroku_app:
             await haha.edit("Build in Progress... \nPlease wait for a few minutes till we update and restart your app.")
-             = heroku_app.git_url.replace(
+            heroku_git_url = heroku_app.git_url.replace(
                "https://",
                "https://api:" + HEROKU_API_KEY + "@"
             )
