@@ -46,16 +46,18 @@ async def updater(client, m: Message):
                break
          if heroku_app:
             await haha.edit("Build in Progress... \nPlease wait for a few minutes till we update and restart your app.")
-            heroku_git_url = heroku_app.git_url.replace(
+             = heroku_app.git_url.replace(
                "https://",
                "https://api:" + HEROKU_API_KEY + "@"
             )
+            print(heroku_git_url)
             if "heroku" in repo.remotes:
                remote = repo.remote("heroku")
-               remote.set_url(heroku_git_url)
+               print(remote.set_url(heroku_git_url))
             else:
                remote = repo.create_remote("heroku", heroku_git_url)
-            remote.push(refspec="HEAD:refs/heads/video", force=True)
+               print(remote)
+            print(remote.push(refspec="HEAD:refs/heads/video", force=True))
             asyncio.get_event_loop().create_task(restart(client, haha))
          else:
             await haha.edit("Check your `HEROKU_APP_NAME` in Vars and try again.")
