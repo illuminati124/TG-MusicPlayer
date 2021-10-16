@@ -21,6 +21,14 @@
             "description": "my.telegram.org",
             "required": true
         },
+        "HEROKU_API_KEY": {
+            "description": "https://dashboard.heroku.com/account",
+            "required": true
+        },
+        "HEROKU_APP_NAME": {
+            "description": "app-name of your Heroku App",
+            "required": true
+        },
         "HNDLR": {
             "description": "Handler | Default (!)",
             "value": "!",
