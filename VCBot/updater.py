@@ -31,8 +31,8 @@ async def updater(client, m: Message):
       repo = git.Repo.init()
       origin = repo.create_remote(REPO_REMOTE_NAME, UPSTREAM)
       origin.fetch()
-      repo.create_head("video", origin.refs.master)
-      repo.heads.master.checkout(True)
+      repo.create_head("video", origin.refs.video)
+      repo.heads.video.checkout(True)
    repo.remote(REPO_REMOTE_NAME).fetch("video")
    
    if ON_HEROKU:
@@ -55,7 +55,7 @@ async def updater(client, m: Message):
                remote.set_url(heroku_git_url)
             else:
                remote = repo.create_remote("heroku", heroku_git_url)
-            remote.push(refspec="HEAD:refs/heads/master", force=True)
+            remote.push(refspec="HEAD:refs/heads/video", force=True)
             asyncio.get_event_loop().create_task(restart(client, haha))
          else:
             await haha.edit("Check your `HEROKU_APP_NAME` in Vars and try again.")
