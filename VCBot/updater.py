@@ -3,12 +3,10 @@ import sys
 import heroku3
 import git
 import asyncio
-from config import bot, call_py, HNDLR, contact_filter, ON_HEROKU, UPSTREAM, HEROKU_API_KEY, HEROKU_APP_NAME
+from config import bot, call_py, HNDLR, contact_filter, ON_HEROKU, UPSTREAM_REPO, HEROKU_API_KEY, HEROKU_APP_NAME
 from pyrogram import Client, filters
 from pyrogram.types import Message
 
-
-REPO_REMOTE_NAME = "upstream"
 
 async def restart(client, message):
     await client.restart()
@@ -29,11 +27,19 @@ async def updater(client, m: Message):
       repo = git.Repo()
    except git.exc.InvalidGitRepositoryError as er:
       repo = git.Repo.init()
-      origin = repo.create_remote(REPO_REMOTE_NAME, UPSTREAM)
+      origin = repo.create_remote("upstream", UPSTREAM_REPO)
       origin.fetch()
       repo.create_head("video", origin.refs.video)
+      repo.heads.video.set_tracking_branch(origin.refs.video)
       repo.heads.video.checkout(True)
-   repo.remote(REPO_REMOTE_NAME).fetch("video")
+   try:
+      repo.create_remote("upstream", UPSTREAM_REPO)
+   except Exception as err:
+      print(err)
+        
+   branch = repo.active_branch.name
+   upstream = repo.remote("upstream")
+   upstream.fetch(branch)
    
    if ON_HEROKU:
       try:
@@ -46,6 +52,8 @@ async def updater(client, m: Message):
                break
          if heroku_app:
             await haha.edit("Build in Progress... \nPlease wait for a few minutes till we update and restart your app.")
+            upstream.fetch(branch)
+            repo.git.reset("--hard", "FETCH_HEAD")
             heroku_git_url = heroku_app.git_url.replace(
                "https://",
                "https://api:" + HEROKU_API_KEY + "@"
@@ -53,13 +61,15 @@ async def updater(client, m: Message):
             print(heroku_git_url)
             if "heroku" in repo.remotes:
                remote = repo.remote("heroku")
-               print(remote.set_url(heroku_git_url))
+               remote.set_url(heroku_git_url)
             else:
                remote = repo.create_remote("heroku", heroku_git_url)
-               print(remote)
-            hnn = await exec("git push heroku 'upstream/video'")
-            print(hnn)
-            asyncio.get_event_loop().create_task(restart(client, haha))
+            try:
+               remote.push(refspec=f"HEAD:refs/heads/{branch}", force=True)
+               asyncio.get_event_loop().create_task(restart(client, haha))
+            except GitCommandError as errr:
+               await haha.edit(f"**ERROR** \n`{errr}`")
+            
          else:
             await haha.edit("Check your `HEROKU_APP_NAME` in Vars and try again.")
       except Exception as epc:
