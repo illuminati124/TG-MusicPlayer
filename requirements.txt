@@ -5,3 +5,5 @@ asyncio
 youtube-search-python
 youtube-dl
 python-dotenv
+GitPython
+heroku3
