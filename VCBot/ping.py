@@ -42,7 +42,6 @@ async def ping(client, m: Message):
 @Client.on_message(contact_filter & filters.command(['restart'], prefixes=f"{HNDLR}"))
 async def restart(client, m: Message):
    await m.reply("`Restarting...`")
-   await client.stop()
    os.execl(sys.executable, sys.executable, *sys.argv)
    # You probably don't need it but whatever
    quit()
