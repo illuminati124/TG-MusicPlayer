@@ -24,7 +24,7 @@ async def exec(cmd):
 
 @Client.on_message(contact_filter & filters.command(['update'], prefixes=f"{HNDLR}"))
 async def updater(client, m: Message):
-   haha = await m.reply("...")
+   haha = await m.reply("`...`")
    try:
       repo = git.Repo()
    except git.exc.InvalidGitRepositoryError as er:
