@@ -6,6 +6,10 @@ from pytgcalls import PyTgCalls
 # For Local Deploy
 if os.path.exists(".env"):
     load_dotenv(".env")
+    
+# For Heroku
+HEROKU_API_KEY = os.getenv("HEROKU_API_KEY")
+HEROKU_APP_NAME = os.getenv("HEROKU_APP_NAME")
 
 # Necessary Vars
 API_ID = int(os.getenv("API_ID", "6"))
@@ -25,5 +29,6 @@ contact_filter = filters.create(
     (message.from_user and message.from_user.is_contact) or message.outgoing
 )
 
+UPSTREAM = "https://github.com/Lost-In-Dark/TG-MusicPlayer"
 bot = Client(SESSION, API_ID, API_HASH, plugins=dict(root="VCBot"))
 call_py = PyTgCalls(bot)
