@@ -29,6 +29,6 @@ contact_filter = filters.create(
     (message.from_user and message.from_user.is_contact) or message.outgoing
 )
 
-UPSTREAM = "https://github.com/Lost-In-Dark/TG-MusicPlayer"
+UPSTREAM_REPO = "https://github.com/Lost-In-Dark/TG-MusicPlayer"
 bot = Client(SESSION, API_ID, API_HASH, plugins=dict(root="VCBot"))
 call_py = PyTgCalls(bot)
