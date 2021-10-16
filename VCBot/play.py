@@ -139,3 +139,41 @@ async def play(client, m: Message):
                         await huehue.edit(f"**Started Playing Audio ▶** \n**🎧 SONG** : [{songname}]({url}) \n**💬 CHAT** : `{chat_id}`", disable_web_page_preview=True)
                      except Exception as ep:
                         await huehue.edit(f"`{ep}`")
+
+@Client.on_message(filters.command(['stream'], prefixes=f"{HNDLR}"))
+async def stream(client, m: Message):
+   chat_id = m.chat.id
+   if len(m.command) < 2:
+      await m.reply("`Give A Link/LiveLink/.m3u8 URL/YTLink to Play Audio from 🎶`")
+   else: 
+      link = m.text.split(None, 1)[1]
+      huehue = await m.reply("`Trying to Play 📻`")
+
+      # Filtering out YouTube URL's
+      regex = r"^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+"
+      match = re.match(regex,link)
+      if match:
+         hm, livelink = await ytdl(link)
+      else:
+         livelink = link
+         hm = 1
+      
+      if hm==0:
+         await huehue.edit(f"**YTDL ERROR ⚠️** \n\n`{ytlink}`")
+      else:
+         if chat_id in QUEUE:
+            pos = add_to_queue(chat_id, "Radio 📻", livelink, link, "Audio", 0)
+            await huehue.edit(f"Queued at **#{pos}**")
+         else:
+            try:
+               await call_py.join_group_call(
+                  chat_id,
+                  AudioPiped(
+                     livelink,
+                  ),
+                  stream_type=StreamType().pulse_stream,
+               )
+               add_to_queue(chat_id, "Radio 📻", livelink, link, "Audio", 0)
+               await huehue.edit(f"Started Playing **[Radio 📻]({link})** in `{chat_id}`", disable_web_page_preview=True)
+            except Exception as ep:
+               await huehue.edit(f"`{ep}`")
