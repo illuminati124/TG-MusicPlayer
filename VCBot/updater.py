@@ -51,7 +51,7 @@ async def updater(client, m: Message):
                heroku_app = app
                break
          if heroku_app:
-            await haha.edit("**Build in Progress...** \nPlease wait for a few minutes till we update and restart your app.")
+            await haha.edit("**Build in Progress...** \nPlease wait for a few minutes till we update and restart your app")
             upstream.fetch(branch)
             repo.git.reset("--hard", "FETCH_HEAD")
             heroku_git_url = heroku_app.git_url.replace(
