@@ -18,7 +18,7 @@ SESSION = os.getenv("SESSION")
 HNDLR = os.getenv("HNDLR", "!")
 
 # Check
-if os.getenv("DYNOS"):
+if os.getenv("DYNO"):
     ON_HEROKU = True
 else:
     ON_HEROKU = False
