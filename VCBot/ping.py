@@ -1,4 +1,5 @@
 import os
+import sys
 import asyncio
 from pyrogram import Client
 from pyrogram import filters
@@ -38,7 +39,16 @@ async def ping(client, m: Message):
    uptime = await _human_time_duration(int(uptime_sec))
    await m_reply.edit(f"`{delta_ping * 1000:.3f} ms` \n**Uptime ⏳** - `{uptime}`")
 
+@Client.on_message(contact_filter & filters.command(['restart'], prefixes=f"{HNDLR}"))
+async def restart(client, m: Message):
+   await m.reply("`Restarting...`")
+   await call_py.stop()
+   await client.disconnect()
+   os.execl(sys.executable, sys.executable, *sys.argv)
+   # You probably don't need it but whatever
+   quit()
+
 @Client.on_message(contact_filter & filters.command(['help'], prefixes=f"{HNDLR}"))
 async def help(client, m: Message):
-   HELP = f"**HELP MENU 🛠** \n\n__USER COMMANDS__ (Anyone can Use): \n`{HNDLR}play` \n`{HNDLR}playfrom [channel] ; [n]` - Plays last n songs from channel \n`{HNDLR}playlist` / `{HNDLR}queue` \n\n__SUDO COMMANDS__ (Can only be accessed by You and Your Contacts): \n`{HNDLR}ping` \n`{HNDLR}skip` \n`{HNDLR}pause` and `{HNDLR}resume` \n`{HNDLR}stop` / `{HNDLR}end` \n`{HNDLR}help`"
+   HELP = f"**HELP MENU 🛠** \n\n__USER COMMANDS__ (Anyone can Use): \n`{HNDLR}play` \n`{HNDLR}vplay` \n`{HNDLR}vstream` (For .m3u8 / live links) \n`{HNDLR}playfrom [channel] ; [n]` - Plays last n songs from channel \n`{HNDLR}playlist` / `{HNDLR}queue` \n\n__SUDO COMMANDS__ (Can only be accessed by You and Your Contacts): \n`{HNDLR}ping` \n`{HNDLR}skip` \n`{HNDLR}pause` and `{HNDLR}resume` \n`{HNDLR}stop` / `{HNDLR}end` \n`{HNDLR}help`"
    await m.reply(HELP)
