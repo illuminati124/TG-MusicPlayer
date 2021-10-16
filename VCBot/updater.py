@@ -57,11 +57,13 @@ async def updater(client, m: Message):
             else:
                remote = repo.create_remote("heroku", heroku_git_url)
                print(remote)
-            print(remote.push(refspec="upstream/video", force=True))
+            hnn = await exec("git push heroku 'upstream/video'")
+            print(hnn)
             asyncio.get_event_loop().create_task(restart(client, haha))
          else:
             await haha.edit("Check your `HEROKU_APP_NAME` in Vars and try again.")
-      except:
+      except Exception as epc:
+         await m.reply(epc)
          await haha.edit("Check your `HEROKU_API_KEY` in Vars and try again.")
           
    else:
