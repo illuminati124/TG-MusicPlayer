@@ -1,12 +1,18 @@
-import os
-from pyrogram import Client, idle
-from pytgcalls import PyTgCalls
-from pytgcalls import idle as pyidle
-from config import bot, call_py
+import asyncio
 
-bot.start()
-print("UserBot Started")
-call_py.start()
-print("Vc Client Started")
-pyidle()
-idle()
+from driver.veez import bot, call_py
+from pytgcalls import idle
+
+
+async def mulai_bot():
+    print("[INFO]: STARTING BOT CLIENT")
+    await bot.start()
+    print("[INFO]: STARTING PYTGCALLS CLIENT")
+    await call_py.start()
+    await idle()
+    print("[INFO]: STOPPING BOT")
+    await bot.stop()
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(mulai_bot())
