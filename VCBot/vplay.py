@@ -66,11 +66,13 @@ async def vplay(client, m: Message):
             else:
                Q = 720
                await huehue.edit("`Only 720, 480, 360 Allowed` \n`Now Streaming in 720p`")
-         
-         if replied.video:
-            songname = replied.video.file_name[:35] + "..."
-         elif replied.document:
-            songname = replied.document.file_name[:35] + "..."       
+         try:
+            if replied.video:
+               songname = replied.video.file_name[:35] + "..."
+            elif replied.document:
+               songname = replied.document.file_name[:35] + "..."       
+         except:
+            songname = "Video"
   
          if chat_id in QUEUE:
             pos = add_to_queue(chat_id, songname, dl, link, "Video", Q)
