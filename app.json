@@ -28,7 +28,7 @@
         },
         "GROUP_MODE": {
             "description": "True / False. If set True then Anyone can Play Songs",
-            "value": True,
+            "value": "True",
             "required": true
         }
     },
