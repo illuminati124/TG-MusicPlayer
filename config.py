@@ -12,7 +12,7 @@ API_ID = int(os.getenv("API_ID", "6"))
 API_HASH = os.getenv("API_HASH", "eb06d4abfb49dc3eeb1aeb98ae0f581e")
 SESSION = os.getenv("SESSION")
 HNDLR = os.getenv("HNDLR", "!")
-GROUP_MODE = bool(os.getenv("GROUP_MODE", True))
+GROUP_MODE = os.getenv("GROUP_MODE", True)
 
 
 contact_filter = filters.create(
@@ -20,7 +20,7 @@ contact_filter = filters.create(
     (message.from_user and message.from_user.is_contact) or message.outgoing
 )
 
-if GROUP_MODE:
+if GROUP_MODE == True or "True" or "true" or "T" or "t" or "Yes" or "yes" or "y" or "Y":
     grpmode = filters.create(
         lambda _, __, message:
         message.from_user or message.outgoing
