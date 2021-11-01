@@ -20,7 +20,7 @@ contact_filter = filters.create(
     (message.from_user and message.from_user.is_contact) or message.outgoing
 )
 
-if GROUP_MODE == True or "True" or "true" or "T" or "t" or "Yes" or "yes" or "y" or "Y":
+if GROUP_MODE == True or "True" or "true" or "T" or "t" or 1 or "1" or "Yes" or "yes" or "y" or "Y":
     grpmode = filters.create(
         lambda _, __, message:
         message.from_user or message.outgoing
