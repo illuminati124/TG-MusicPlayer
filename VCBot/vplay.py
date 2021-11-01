@@ -3,7 +3,7 @@ import re
 import asyncio
 from pyrogram import Client
 from VCBot.queues import QUEUE, add_to_queue
-from config import bot, call_py, HNDLR, contact_filter, groupp_filter
+from config import bot, call_py, HNDLR, contact_filter
 from pyrogram import filters
 from pyrogram.types import Message
 from pytgcalls import StreamType
@@ -48,7 +48,7 @@ async def ytdl(link):
       return 0, stderr.decode()
 
 
-@Client.on_message(filters.command(['vplay'], prefixes=f"{HNDLR}") & groupp_filter)
+@Client.on_message(filters.command(['vplay'], prefixes=f"{HNDLR}"))
 async def vplay(client, m: Message):
    replied = m.reply_to_message
    chat_id = m.chat.id
@@ -170,7 +170,7 @@ async def vplay(client, m: Message):
                         await huehue.edit(f"`{ep}`")
 
 
-@Client.on_message(filters.command(['vstream'], prefixes=f"{HNDLR}") & groupp_filter)
+@Client.on_message(filters.command(['vstream'], prefixes=f"{HNDLR}"))
 async def vstream(client, m: Message):
    chat_id = m.chat.id
    if len(m.command) < 2:
