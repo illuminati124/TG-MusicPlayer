@@ -24,7 +24,7 @@
         "HNDLR": {
             "description": "Handler | Default (!)",
             "value": "!",
-            "required": false
+            "required": false 
         }
     },
     "addons": [],

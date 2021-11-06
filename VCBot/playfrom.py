@@ -28,7 +28,10 @@ async def playfrom(client, m: Message):
                if x.audio.title:
                   songname = x.audio.title[:30] + "..."
                else:
-                  songname = x.audio.file_name[:30] + "..."
+                  if x.audio.file_name:
+                     songname = x.audio.file_name[:30] + "..."
+                  else:
+                     songname = "Audio"
                link = x.link
                if chat_id in QUEUE:
                   add_to_queue(chat_id, songname, location, link, "Audio", 0)
