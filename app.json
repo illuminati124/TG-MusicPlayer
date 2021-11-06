@@ -24,12 +24,7 @@
         "HNDLR": {
             "description": "Handler | Default (!)",
             "value": "!",
-            "required": false
-        },
-        "GROUP_MODE": {
-            "description": "True / False. If set True then Anyone can Play Songs",
-            "value": "True",
-            "required": true
+            "required": false 
         }
     },
     "addons": [],
