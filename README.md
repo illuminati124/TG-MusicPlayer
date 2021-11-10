@@ -51,7 +51,7 @@ python3 main.py
 - `API_HASH`
 - `SESSION` - A Pyrogram String Session. Get one from [Here](https://replit.com/@dashezup/generate-pyrogram-session-string)
 - `HNDLR` - Your Userbot Handler (Default is !)
-- `GROUP_MODE` - if Value is set to `True`, Anyone can Play
+- `GROUP_MODE` - if Value is set to `True`, Anyone can Play. Set it to `False` to restrict play access to Sudo Users/Contacts only.
 
 
 ## Commands and Usage
