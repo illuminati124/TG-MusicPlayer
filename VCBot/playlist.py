@@ -2,10 +2,11 @@ from pyrogram import Client
 from pyrogram import filters
 from pyrogram.types import Message
 from VCBot.queues import QUEUE, get_queue
-from config import HNDLR, contact_filter
+from config import HNDLR, contact_filter, GRPPLAY
 
 @Client.on_message(filters.command(['playlist', 'queue'], prefixes=f"{HNDLR}"))
 async def playlist(client, m: Message):
+ if GRPPLAY or (m.from_user and m.from_user.is_contact) or m.outgoing:
    chat_id = m.chat.id
    if chat_id in QUEUE:
       chat_queue = get_queue(chat_id)
