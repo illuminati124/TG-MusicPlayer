@@ -3,7 +3,7 @@ import re
 import asyncio
 from pyrogram import Client
 from VCBot.queues import QUEUE, add_to_queue
-from config import bot, call_py, HNDLR, contact_filter
+from config import bot, call_py, HNDLR, contact_filter, GRPPLAY
 from pyrogram import filters
 from pyrogram.types import Message
 from pytgcalls import StreamType
@@ -50,6 +50,7 @@ async def ytdl(link):
 
 @Client.on_message(filters.command(['vplay'], prefixes=f"{HNDLR}"))
 async def vplay(client, m: Message):
+ if GRPPLAY or (m.from_user and m.from_user.is_contact) or m.outgoing:
    replied = m.reply_to_message
    chat_id = m.chat.id
    if replied:
@@ -172,6 +173,7 @@ async def vplay(client, m: Message):
 
 @Client.on_message(filters.command(['vstream'], prefixes=f"{HNDLR}"))
 async def vstream(client, m: Message):
+ if GRPPLAY or (m.from_user and m.from_user.is_contact) or m.outgoing:
    chat_id = m.chat.id
    if len(m.command) < 2:
       await m.reply("`Give A Link/LiveLink/.m3u8 URL/YTLink to Stream from 🎶`")
