@@ -3,7 +3,7 @@ import re
 import asyncio
 from pyrogram import Client
 from VCBot.queues import QUEUE, add_to_queue
-from config import bot, call_py, HNDLR, contact_filter
+from config import bot, call_py, HNDLR, contact_filter, GRPPLAY
 from pyrogram import filters
 from pyrogram.types import Message
 from pytgcalls import StreamType
@@ -48,6 +48,9 @@ async def ytdl(link):
 
 @Client.on_message(filters.command(['play'], prefixes=f"{HNDLR}"))
 async def play(client, m: Message):
+ if not GRPPLAY and not (m.outgoing or (m.from_user and m.from_user.is_contact)):
+   pass
+ else:
    replied = m.reply_to_message
    chat_id = m.chat.id
    if replied:
