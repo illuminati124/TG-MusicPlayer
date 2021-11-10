@@ -25,6 +25,11 @@
             "description": "Handler | Default (!)",
             "value": "!",
             "required": false 
+        },
+        "GROUP_MODE": {
+            "description": "Anyone can play, if set to True",
+            "value": "True",
+            "required": true 
         }
     },
     "addons": [],
