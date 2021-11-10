@@ -14,6 +14,8 @@ async def skip(client, m: Message):
          await m.reply("`Nothing Is Playing`")
       elif op==1:
          await m.reply("`Queue is Empty, Leaving Voice Chat...`")
+      elif op==2:
+         await m.reply(f"**Some Error Occurred** \n`Clearing the Queues and Leaving the Voice Chat...`")
       else:
          await m.reply(f"**Skipped ⏭** \n**🎧 Now Playing** - [{op[0]}]({op[1]}) | `{op[2]}`", disable_web_page_preview=True)
    else:

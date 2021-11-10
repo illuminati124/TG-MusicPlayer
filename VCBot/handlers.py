@@ -16,6 +16,7 @@ async def skip_current_song(chat_id):
          clear_queue(chat_id)
          return 1
       else:
+       try:
          songname = chat_queue[1][0]
          url = chat_queue[1][1]
          link = chat_queue[1][2]
@@ -45,6 +46,10 @@ async def skip_current_song(chat_id):
             ) 
          pop_an_item(chat_id)
          return [songname, link, type]
+       except:
+         await call_py.leave_group_call(chat_id)
+         clear_queue(chat_id)
+         return 2
    else:
       return 0
 
@@ -71,6 +76,8 @@ async def on_end_handler(client, update: Update):
       op = await skip_current_song(chat_id)
       if op==1:
          await bot.send_message(chat_id, "`Queue is Empty, Leaving Voice Chat...`")
+      elif op==2:
+         await bot.send_message(chat_id, "**Some Error Occurred** \n`Clearing the Queues and Leaving the Voice Chat...`")
       else:
          await bot.send_message(chat_id, f"**🎧 Now Playing** \n[{op[0]}]({op[1]}) | `{op[2]}`", disable_web_page_preview=True)
    else:

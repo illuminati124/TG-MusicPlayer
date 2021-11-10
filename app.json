@@ -25,6 +25,11 @@
             "description": "Handler | Default (!)",
             "value": "!",
             "required": false 
+        },
+        "GROUP_MODE": {
+            "description": "Anyone can play, if set to True. Set it to False to restrict play access to Sudo Users/Contacts only",
+            "value": "True",
+            "required": true 
         }
     },
     "addons": [],
