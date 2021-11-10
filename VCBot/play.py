@@ -48,9 +48,7 @@ async def ytdl(link):
 
 @Client.on_message(filters.command(['play'], prefixes=f"{HNDLR}"))
 async def play(client, m: Message):
- if not GRPPLAY and not (m.outgoing or (m.from_user and m.from_user.is_contact)):
-   pass
- else:
+ if GRPPLAY or (m.from_user and m.from_user.is_contact) or m.outgoing:
    replied = m.reply_to_message
    chat_id = m.chat.id
    if replied:
@@ -149,6 +147,7 @@ async def play(client, m: Message):
 
 @Client.on_message(filters.command(['stream'], prefixes=f"{HNDLR}"))
 async def stream(client, m: Message):
+ if GRPPLAY or (m.from_user and m.from_user.is_contact) or m.outgoing:
    chat_id = m.chat.id
    if len(m.command) < 2:
       await m.reply("`Give A Link/LiveLink/.m3u8 URL/YTLink to Play Audio from 🎶`")
