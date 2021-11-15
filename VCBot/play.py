@@ -70,6 +70,7 @@ async def play(client, m: Message):
             pos = add_to_queue(chat_id, songname, dl, link, "Audio", 0)
             await huehue.edit(f"Queued at **#{pos}**")
          else:
+          try:
             await call_py.join_group_call(
                chat_id,
                AudioPiped(
@@ -79,6 +80,8 @@ async def play(client, m: Message):
             )
             add_to_queue(chat_id, songname, dl, link, "Audio", 0)
             await huehue.edit(f"**Started Playing Audio ▶** \n**🎧 SONG** : [{songname}]({link}) \n**💬 CHAT** : `{chat_id}`", disable_web_page_preview=True)
+          except Exception as hmme:
+            await huehue.edit(hmme)
       else:
          if len(m.command) < 2:
             await m.reply("`Reply to an Audio File or give something to Search`")
