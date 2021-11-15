@@ -1,6 +1,6 @@
 from VCBot.queues import QUEUE, get_queue, pop_an_item, clear_queue
 from config import bot, call_py
-from pytgcalls import StreamType
+from pytgcalls import StreamType, PyTgCalls
 from pyrogram import Client
 from pyrogram.raw.base import Update
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
@@ -82,3 +82,11 @@ async def on_end_handler(client, update: Update):
          await bot.send_message(chat_id, f"**🎧 Now Playing** \n[{op[0]}]({op[1]}) | `{op[2]}`", disable_web_page_preview=True)
    else:
       pass
+
+
+# When someone ends the Voice Chat without stopping the Playback
+
+@call_py.on_closed_voice_chat()
+async def close_handler(client: PyTgCalls, chat_id: int):
+   if chat_id in QUEUE:
+      clear_queue(chat_id)
