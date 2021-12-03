@@ -22,9 +22,10 @@ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-2) Installing FFMPEG and Git
+2) Installing Dependencies
 ```bash
 sudo apt-get install git ffmpeg -y
+sudo apt-get install youtube-dl -y
 ```
 
 3) Cloning the Repo
