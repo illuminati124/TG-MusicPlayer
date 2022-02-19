@@ -5,6 +5,3 @@ asyncio
 youtube-search-python
 yt-dlp
 python-dotenv
-
-
-#nhi mereko kuch commit karne ki khujli ho rhi thi
