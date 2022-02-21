@@ -205,7 +205,7 @@ async def vstream(client, m: Message):
          hm = 1
 
       if hm==0:
-         await huehue.edit(f"**YTDL ERROR ⚠️** \n\n`{ytlink}`")
+         await huehue.edit(f"**YTDL ERROR ⚠️** \n\n`{livelink}`")
       else:
          if chat_id in QUEUE:
             pos = add_to_queue(chat_id, "Live Stream 📺", livelink, link, "Video", Q)
